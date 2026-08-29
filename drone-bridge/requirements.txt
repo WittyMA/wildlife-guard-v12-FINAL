@@ -1,0 +1,22 @@
+# ---- Core bridge (always required) ----
+Flask==2.3.3
+Werkzeug==2.3.7
+flask-cors==4.0.0
+requests==2.31.0
+python-dotenv==1.0.0
+Pillow>=9.0.0
+
+# ---- MAVLink backend (only needed when DRONE_BACKEND=mavlink) ----
+# DroneKit drives MAVLink-capable craft / proxies over serial (USB) or UDP.
+# Install these when wiring up a Pixhawk-based craft or a MAVLink companion.
+dronekit==2.9.2
+pymavlink>=2.4.37
+
+# ---- System dependency (install separately, NOT via pip) ----
+# Required to decode the RTSP/RTMP video stream into JPEG frames:
+#   Ubuntu/Debian : sudo apt install -y ffmpeg
+#   macOS (brew)  : brew install ffmpeg
+#   Windows       : https://www.gyan.dev/ffmpeg/builds/  (add to PATH)
+#
+# For the rtmp_relay backend you also need a local relay such as MediaMTX:
+#   https://github.com/bluenviron/mediamtx/releases

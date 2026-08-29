@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>Wildlife Conservation PWA</title>
+    <meta name="theme-color" content="#1e40af" />
+    <meta name="description" content="Real-time poaching detection and drone verification system for wildlife conservation" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Wildlife Guard" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/favicon.ico" />
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Only register service worker in production (not during development)
+      if ('serviceWorker' in navigator && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').then(
+            (registration) => {
+              console.log('Service Worker registered:', registration);
+            },
+            (error) => {
+              console.error('Service Worker registration failed:', error);
+            }
+          );
+        });
+      } else if ('serviceWorker' in navigator) {
+        // Unregister any existing service worker in dev mode
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+          registrations.forEach(r => r.unregister());
+        });
+      }
+    </script>
+    <!-- Analytics script - only active if VITE_ANALYTICS_ENDPOINT is set -->
+    <script>
+      (function() {
+        const endpoint = "%VITE_ANALYTICS_ENDPOINT%";
+        const websiteId = "%VITE_ANALYTICS_WEBSITE_ID%";
+        
+        // Only load if not a placeholder and not empty
+        if (endpoint && !endpoint.includes('VITE_ANALYTICS_ENDPOINT') && endpoint !== 'undefined') {
+          const script = document.createElement('script');
+          script.async = true;
+          script.defer = true;
+          script.src = endpoint.endsWith('/') ? endpoint + 'umami.js' : endpoint + '/umami.js';
+          script.setAttribute('data-website-id', websiteId || 'default-id');
+          document.head.appendChild(script);
+        }
+      })();
+    </script>
+  </body>
+
+</html>

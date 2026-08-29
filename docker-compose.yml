@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: wildlife_user
+      POSTGRES_PASSWORD: wildlife_password
+      POSTGRES_DB: wildlife_prod
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wildlife_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://wildlife_user:wildlife_password@postgres:5432/wildlife_prod
+      EMAIL_SERVICE: gmail
+      EMAIL_USER: ${EMAIL_USER}
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      DRONE_BRIDGE_URL: http://bridge:5000
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  bridge:
+    build:
+      context: ./drone-bridge
+      dockerfile: Dockerfile
+    environment:
+      BACKEND_URL: http://app:3000
+      DRONE_IP: 192.168.0.1
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

@@ -1,0 +1,84 @@
+{
+  "name": "Wildlife Conservation PWA",
+  "short_name": "Wildlife Guard",
+  "description": "Real-time poaching detection and drone verification system for wildlife conservation",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#1e40af",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "192x192",
+      "type": "image/x-icon",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "512x512",
+      "type": "image/x-icon",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["productivity", "utilities"],
+  "screenshots": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "540x720",
+      "type": "image/x-icon",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "1280x720",
+      "type": "image/x-icon",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Monitor",
+      "short_name": "Monitor",
+      "description": "Real-time monitoring dashboard",
+      "url": "/monitor",
+      "icons": [
+        {
+          "src": "/favicon.ico",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Detections",
+      "short_name": "Detections",
+      "description": "View detection history",
+      "url": "/detections",
+      "icons": [
+        {
+          "src": "/favicon.ico",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "files": [
+        {
+          "name": "media",
+          "accept": ["image/*", "video/*"]
+        }
+      ]
+    }
+  }
+}

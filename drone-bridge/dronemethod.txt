@@ -1,0 +1,73 @@
+Testing
+----------
+export DRONE_BACKEND=sim
+export BRIDGE_PORT=5000
+python3 dji_bridge.py
+
+Real
+------------
+export DRONE_BACKEND=rtmp_relay
+export DRONE_VIDEO_SOURCE=rtsp://localhost:8554/live/drone
+export BRIDGE_PORT=5000
+python3 dji_bridge.py
+
+
+hostname -I #Checking ip of local pc
+
+rtmp://[YOUR_PC_IP]:1935/live/drone
+
+
+=========================================
+In DJI GO app on your phone/tablet:
+
+Connect Phantom 3 controller via USB
+
+Open DJI GO app
+
+Go to Settings → Live Streaming
+
+Set Custom RTMP Server to:
+
+rtmp://192.168.0.29:1935/live/drone
+############################################
+
+
+# Run MediaMTX
+./mediamtx
+
+
+When connected
+---------------
+###
+INF [RTMP] client connected
+INF [RTMP] stream "live/drone" published
+###
+
+🚁 Run the DJI Bridge
+----------------------
+In a new terminal:
+
+bash
+cd /media/yesulitech/WityMA/Research_System/L200/production/wildlife-guard-v14/wildlife-guard-v12-FINAL/drone-bridge
+
+export DRONE_BACKEND=rtmp_relay
+export DRONE_VIDEO_SOURCE=rtsp://localhost:8554/live/drone
+export BRIDGE_PORT=5000
+python3 dji_bridge.py
+
+
+
+#################TESTS######################
+Test Everything
+Check bridge health:
+
+bash
+curl http://localhost:5000/health
+View video feed in browser:
+
+text
+http://localhost:5000/video_feed
+Check telemetry:
+
+bash
+curl http://localhost:5000/telemetry
